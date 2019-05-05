@@ -1,0 +1,9 @@
+E:\VS 2015\segmentsClock\segmentsClock\bin\Debug\segmentsClock.exe.config
+E:\VS 2015\segmentsClock\segmentsClock\bin\Debug\segmentsClock.exe
+E:\VS 2015\segmentsClock\segmentsClock\bin\Debug\segmentsClock.pdb
+E:\VS 2015\segmentsClock\segmentsClock\obj\Debug\segmentsClock.csprojResolveAssemblyReference.cache
+E:\VS 2015\segmentsClock\segmentsClock\obj\Debug\segmentsClock.Form1.resources
+E:\VS 2015\segmentsClock\segmentsClock\obj\Debug\segmentsClock.Properties.Resources.resources
+E:\VS 2015\segmentsClock\segmentsClock\obj\Debug\segmentsClock.csproj.GenerateResource.Cache
+E:\VS 2015\segmentsClock\segmentsClock\obj\Debug\segmentsClock.exe
+E:\VS 2015\segmentsClock\segmentsClock\obj\Debug\segmentsClock.pdb
