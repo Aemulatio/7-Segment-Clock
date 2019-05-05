@@ -9,56 +9,70 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
+
 
 namespace segmentsClock
 {
     public partial class Form1 : Form
     {
-        private Thread thread;
-
+        private static System.Timers.Timer aTimer;
+        private static DateTime starTime;
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
         void Time()
         {
-            Graphics g;
-            g = this.CreateGraphics();
-
+            starTime = DateTime.Now;
             DateTime time = DateTime.Now;
 
-            if (time.Hour > 9)
+            Graphics g;
+            g = this.CreateGraphics();
+            Console.WriteLine(starTime);
+            Console.WriteLine(time);
+
+            if (starTime.Hour != time.Hour && starTime.Minute != time.Minute)
             {
-                _firstSection(time.Hour / 10); //hours
-                _secondSection(time.Hour % 10); //hours
+                starTime = time;
+                g.Clear(ColorTranslator.FromHtml("#c0c0"));
+
+                if (time.Hour > 9)
+                {
+                    _firstSection(time.Hour / 10); //hours
+                    _secondSection(time.Hour % 10); //hours
+                }
+                else
+                {
+                    _firstSection(); //hours
+                    _secondSection(time.Hour % 10); //hours
+                }
+
+                if (time.Minute > 9)
+                {
+                    _thirdSection(time.Minute / 10); //minutes
+                    _fourSection(time.Minute % 10); //minutes
+                }
+                else
+                {
+                    _thirdSection(); //minutes
+                    _fourSection(time.Minute % 10); //minutes
+                }
+
+                __colon();
             }
             else
             {
-                _firstSection(); //hours
-                _secondSection(time.Hour % 10); //hours
+                g.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#c0c0c0")), 475, 105, 10, 400);
+                __colon();
             }
 
-            if (time.Minute > 9)
-            {
-                _thirdSection(time.Minute / 10); //minutes
-                _fourSection(time.Minute % 10); //minutes
-            }
-            else
-            {
-                _thirdSection(); //minutes
-                _fourSection(time.Minute % 10); //minutes
-            }
+            g.Dispose();
 
-            __colon();
-            // g.Clear(ColorTranslator.FromHtml("#c0c0"));
+            Time();
         }
-
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
@@ -90,6 +104,50 @@ namespace segmentsClock
             }
 
             __colon();
+
+            g.Dispose();
+            starTime = DateTime.Now;
+
+            g = this.CreateGraphics();
+            Console.WriteLine(starTime);
+            Console.WriteLine(time);
+
+            if (starTime.Hour != time.Hour && starTime.Minute != time.Minute)
+            {
+                starTime = time;
+                g.Clear(ColorTranslator.FromHtml("#c0c0"));
+
+                if (time.Hour > 9)
+                {
+                    _firstSection(time.Hour / 10); //hours
+                    _secondSection(time.Hour % 10); //hours
+                }
+                else
+                {
+                    _firstSection(); //hours
+                    _secondSection(time.Hour % 10); //hours
+                }
+
+                if (time.Minute > 9)
+                {
+                    _thirdSection(time.Minute / 10); //minutes
+                    _fourSection(time.Minute % 10); //minutes
+                }
+                else
+                {
+                    _thirdSection(); //minutes
+                    _fourSection(time.Minute % 10); //minutes
+                }
+
+                __colon();
+            }
+            else
+            {
+                g.FillRectangle(new SolidBrush(ColorTranslator.FromHtml("#c0c0c0")), 475, 105, 10, 400);
+                __colon();
+            }
+
+            g.Dispose();
         }
 
         private void _firstSection(int h = 0)
@@ -1207,31 +1265,23 @@ namespace segmentsClock
             }
         }
 
-
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
-        {
-            Console.WriteLine(e.Location);
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            Thread.Sleep(1000);
-        }
-
-        void func()
-        {
-            int i = 0;
-            while (i == 0)
-            {
-                this.Invoke((MethodInvoker) delegate() { func(); });
-            }
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            timer1.Start();
-            thread = new Thread(func);
-            thread.Start();
+            aTimer = new System.Timers.Timer();
+            aTimer.Interval = 2000;
+
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+
+            // Have the timer fire repeated events (true is the default)
+            aTimer.AutoReset = true;
+
+            // Start the timer
+            aTimer.Enabled = true;
+        }
+
+        private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
         }
     }
 }
